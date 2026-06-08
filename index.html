@@ -1,0 +1,2830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vibeshort</title>
+
+<style>
+#sideMenu{
+position:fixed;
+right:0;
+top:0;
+width:280px;
+height:100%;
+background:#111;
+z-index:9999;
+padding:20px;
+border-left:1px solid #333;
+overflow-y:auto;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#000;
+color:#fff;
+padding-bottom:70px;
+}
+
+header{
+position:sticky;
+top:0;
+height:65px;
+background:#0b0f18;
+border-bottom:1px solid #222;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 20px;
+z-index:999;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#8a5cff;
+}
+
+.topIcons{
+display:flex;
+gap:20px;
+font-size:24px;
+cursor:pointer;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:#111;
+border:1px solid #222;
+border-radius:12px;
+padding:15px;
+margin-bottom:15px;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+outline:none;
+border-radius:10px;
+background:#1c1c1c;
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+background:#8a5cff;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.hidden{
+display:none;
+}
+
+.profileAvatar{
+width:90px;
+height:90px;
+border-radius:50%;
+background:#222;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+margin:auto;
+margin-bottom:10px;
+}
+
+.profileName{
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+
+.profileUser{
+text-align:center;
+color:#aaa;
+margin-top:5px;
+}
+
+.profileBio{
+text-align:center;
+margin-top:10px;
+}
+
+.stats{
+display:flex;
+justify-content:space-around;
+margin-top:15px;
+}
+
+.stat{
+text-align:center;
+}
+
+
+.feedPost{
+background:linear-gradient(
+145deg,
+#121826,
+#0d1117
+);
+
+border:1px solid #2a2a2a;
+
+padding:20px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 0 20px rgba(138,92,255,.15);
+}
+
+.feedPost h3{
+margin-bottom:10px;
+}
+
+.bottomNav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#111;
+border-top:1px solid #333;
+display:flex;
+justify-content:space-around;
+align-items:center;
+z-index:99999;
+}
+
+.navBtn{
+background:none;
+border:none;
+color:white;
+font-size:12px;
+width:auto;
+padding:0;
+margin:0;
+}
+
+.navBtn.active{
+color:#8a5cff;
+font-weight:bold;
+}
+
+#chatMessages{
+height:400px;
+overflow-y:auto;
+padding:10px;
+}
+#chatTopBar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+border-bottom:1px solid #333;
+font-weight:bold;
+}
+
+#chatHeader{
+font-size:18px;
+}
+
+#chatMenu{
+font-size:22px;
+cursor:pointer;
+}
+
+#chatMessages{
+height:450px;
+overflow-y:auto;
+padding:10px;
+}
+
+.chatItem{
+
+display:flex;
+align-items:center;
+padding:15px;
+border-bottom:1px solid #222;
+cursor:pointer;
+
+}
+
+.chatAvatar{
+
+width:60px;
+height:60px;
+border-radius:50%;
+background:#222;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:22px;
+
+margin-right:15px;
+
+}
+
+.chatInfo{
+
+flex:1;
+
+}
+
+.chatName{
+
+font-size:18px;
+font-weight:bold;
+
+}
+
+.chatPreview{
+
+color:#999;
+margin-top:5px;
+
+}
+
+.chatTime{
+
+font-size:12px;
+color:#888;
+
+}
+
+#chatInputArea{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+#chatInput{
+flex:1;
+height:50px;
+resize:none;
+}
+
+#feedContainer{
+width:100%;
+max-width:420px;
+margin:auto;
+height:calc(100vh - 70px);
+overflow-y:scroll;
+scroll-snap-type:y mandatory;
+}
+
+.videoFeed{
+height:85vh;
+scroll-snap-align:start;
+margin-bottom:10px;
+border-radius:15px;
+overflow:hidden;
+background:#111;
+}
+
+.videoFeed video{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.videoActions{
+position:absolute;
+right:15px;
+bottom:100px;
+display:flex;
+flex-direction:column;
+gap:15px;
+font-size:24px;
+text-align:center;
+z-index:10;
+}
+
+.videoActions div{
+cursor:pointer;
+}
+
+.videoWrapper{
+position:relative;
+height:100%;
+width:100%;
+}
+
+.videoCaption{
+position:absolute;
+left:15px;
+bottom:40px;
+z-index:10;
+font-size:14px;
+}
+
+#aiMessages{
+height:350px;
+overflow-y:auto;
+margin-bottom:10px;
+}
+
+#aiMessages .card{
+margin-bottom:10px;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div id="authBox">
+
+<div class="card">
+
+<h2>🔥 Vibeshort</h2>
+
+<input
+type="text"
+id="nickname"
+placeholder="Nickname"
+>
+
+
+<input
+type="text"
+id="username"
+placeholder="Username"
+>
+
+<input
+type="email"
+id="email"
+placeholder="Email"
+>
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+>
+
+<button onclick="signup()">
+Create Account
+</button>
+
+<button onclick="login()">
+Login
+</button>
+
+</div>
+
+</div>
+
+<div id="appBox" class="hidden">
+
+<div id="searchPage" class="hidden">
+
+<div class="card">
+
+<input
+id="searchUser"
+type="text"
+placeholder="Search users..."
+onkeyup="searchUsers()"
+>
+
+<div id="searchResults"></div>
+
+</div>
+
+</div>
+
+
+<header>
+
+
+<div class="logo">
+🔥 Vibeshort
+</div>
+
+<div class="topIcons">
+
+<span onclick="openSearch()">
+🔍
+</span>
+
+<span id="menuBtn">
+☰
+</span>
+
+</div>
+
+</header>
+
+
+<div id="homePage">
+    <div id="feedContainer">
+
+<h1 style="color:white">
+Vibeshort Feed Test
+</h1>
+
+</div>
+</div>
+
+<div id="shortsPage" class="hidden">
+<div class="card">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<h2>🎵 Music</h2>
+
+<button>
+🎤 Artist Studio
+</button>
+
+</div>
+
+</div>
+
+<div id="musicFeed">
+
+<div class="feedPost">
+
+<h3>Trending Songs</h3>
+
+<p>Artists songs appear here</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div id="uploadPage" class="hidden">
+
+<div class="card">
+
+<h2>Create</h2>
+
+<textarea
+id="postCaption"
+placeholder="Write something..."
+></textarea>
+
+<button onclick="createPost()">
+Post
+</button>
+
+<button>
+🎥 Upload Video
+</button>
+
+<button>
+🖼 Upload Picture
+</button>
+
+<button>
+🔴 Go Live
+</button>
+
+</div>
+
+</div>
+
+
+<div id="messagesPage" class="hidden">
+
+<div class="card">
+
+<h2>💜 V.Chat</h2>
+
+<div id="chatList"></div>
+
+</div>
+
+</div>
+
+
+
+<div id="chatWindow" class="hidden">
+
+<div class="card">
+
+<h2 id="chatHeader">
+Chat
+</h2>
+
+<div id="chatMessages"></div>
+
+<textarea
+id="chatInput"
+placeholder="Type a message..."
+></textarea>
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+</div>
+
+</div>
+
+<div id="userProfilePage" class="hidden">
+
+<div class="card">
+
+<div class="profileName" id="viewNickname">
+Nickname
+</div>
+
+<div class="profileAvatar">
+👤
+</div>
+
+<div class="profileUser" id="viewUsername">
+@username
+</div>
+
+<div class="profileBio" id="viewBio">
+Bio
+</div>
+
+<div id="viewWebsite"></div>
+
+<button id="followBtn">
+Follow
+</button>
+
+<button
+id="messageBtn"
+onclick="openChat()"
+>
+💬 Message
+</button>
+
+</div>
+
+</div> 
+
+<div id="profilePage" class="hidden">
+
+
+<div class="card">
+
+<div class="profileName" id="profileNickname">
+Nickname
+</div>
+
+<img
+id="profileAvatar"
+class="profileAvatar"
+src="https://via.placeholder.com/90"
+style="
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+display:block;
+margin:auto;
+margin-bottom:10px;
+">
+
+
+
+
+<div class="profileUser" id="profileUsername">
+@username
+</div>
+
+<button id="verifyUserBtn" class="hidden" onclick="verifyUser()">
+✔️ Verify User
+</button>
+
+
+<div class="profileBio" id="profileBio">
+New Vibeshort User
+</div>
+
+<div id="profileWebsite"></div>
+
+<button id="myFollowBtn" class="hidden">
+Follow
+</button>
+
+<button id="editProfileBtn" onclick="toggleEditProfile()">
+✏️ Edit Profile
+</button>
+
+<div id="editProfileBox" class="hidden">
+
+<input type="text" id="editNickname" placeholder="Edit Nickname">
+
+<input type="text" id="editUsername" placeholder="Edit Username">
+
+<input type="text" id="editBio" placeholder="Edit Bio">
+
+<input type="text" id="editWebsite" placeholder="Website Link">
+
+<br><br>
+
+<label>
+Profile Picture
+</label>
+
+<br>
+
+<input
+type="file"
+id="profilePictureInput"
+accept="image/*">
+
+
+<button onclick="saveProfile()">
+💾 Save Profile
+</button>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h3 id="followingCount">0</h3>
+<p>Following</p>
+</div>
+
+<div class="stat">
+<h3 id="followersCount">0</h3>
+<p>Followers</p>
+</div>
+
+<div class="stat">
+<h3 id="likesCount">0</h3>
+<p>Likes</p>
+</div>
+
+</div>
+
+
+
+<div id="ceoBox" class="card hidden">
+<h3>👑 CEO Dashboard</h3>
+<p>Founder controls available.</p>
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div id="bottomNav" class="bottomNav hidden">
+
+<button class="navBtn active" id="homeBtn">
+<div>🏠</div>
+<div>Home</div>
+</button>
+
+<button class="navBtn" id="shortsBtn">
+<div>🎵</div>
+<div>Music</div>
+</button>
+
+<button class="navBtn" id="uploadBtn">
+<div>➕</div>
+<div>Create</div>
+</button>
+
+<button class="navBtn" id="messagesBtn">
+<div>💬</div>
+<div>Chat</div>
+</button>
+
+<button class="navBtn" id="profileBtn">
+<div>👤</div>
+<div>Profile</div>
+</button>
+</div>
+
+
+<div id="sideMenu" class="hidden">
+<button id="closeMenuBtn">
+
+✖ Close
+
+</button>
+
+
+<div class="card">
+
+
+
+<h2>⚡ Vibeshort Hub</h2>
+
+<p style="color:#888;margin-top:5px;">
+
+Future Entertainment Ecosystem
+
+</p>
+
+
+
+<button onclick="openWalletPage()">
+💰 V-Wallet
+</button>
+
+
+<button onclick="openGlobalPayPage()">
+🌍 V.GlobalPay
+</button>
+
+
+<button onclick="openAIPage()">
+🤖 V.AI
+</button>
+
+
+
+<button onclick="openCryptoPage()">
+
+🪙 V-Crypto
+
+</button>
+
+
+<button onclick="openVDating()">
+❤️ V.Dating
+</button>
+
+
+<button onclick="openVMarketPage()">
+
+🛒 V.Market
+
+</button>
+
+
+
+<button onclick="openBusinessHubPage()">
+
+🏢 Business Hub
+
+</button>
+
+
+
+<button onclick="openCreatorStudioPage()">
+
+🎬 Creator Studio
+
+</button>
+
+
+<button>
+
+📺 Live
+
+</button>
+
+
+
+
+<hr style="margin:20px 0;">
+
+
+
+<h3>Account Center</h3>
+
+
+
+<p id="accountEmail"></p>
+
+
+
+<button>
+
+🔒 Security
+
+</button>
+
+
+
+<button>
+
+✔ Verification
+
+</button>
+
+<hr style="margin:20px 0;">
+
+
+
+<button onclick="logout()">
+
+🚪 Logout
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+<div id="walletPage" class="hidden">
+
+<div class="card">
+
+<h2>💰 V.Wallet</h2>
+
+<h3 id="walletBalance">$0.00</h3>
+
+<p>Main Balance</p>
+
+<button>
+➕ Deposit
+</button>
+
+<button>
+📤 Withdraw
+</button>
+
+<button>
+💸 Send Money
+</button>
+
+<button onclick="openGlobalPayPage()">
+🌍 Open V.GlobalPay
+</button>
+
+<button onclick="openCryptoPage()">
+🪙 Open V.Crypto
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="globalPayPage" class="hidden">
+
+
+
+<div class="card">
+
+
+
+<h2>🌍 V.GlobalPay</h2>
+
+
+
+<h3 id="globalPayBalance">0 USD</h3>
+
+
+
+<p id="globalPayId"></p>
+
+
+
+<button>
+
+Send Money
+
+</button>
+
+
+
+<button>
+
+Withdraw
+
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+<div id="cryptoPage" class="hidden">
+
+<div class="card">
+
+<h2>🪙 V.Crypto</h2>
+
+<h3>Total Portfolio</h3>
+
+<h1>$0.00</h1>
+
+<div class="card">
+₿ Bitcoin (BTC)
+<br>
+0.000000
+</div>
+
+<div class="card">
+Ξ Ethereum (ETH)
+<br>
+0.000000
+</div>
+
+<div class="card">
+💵 USDT
+<br>
+0.00
+</div>
+
+<div class="card">
+🚀 V-Coin
+<br>
+0
+</div>
+
+<button>
+📤 Send Crypto
+</button>
+
+<button>
+📥 Receive Crypto
+</button>
+
+<button>
+🔄 Swap Crypto
+</button>
+
+</div>
+
+</div>
+
+
+<div id="musicPage" class="hidden">
+
+
+
+<h2>🎵 Vibeshort Music</h2>
+
+
+<button onclick="becomeArtist()">
+🎤 Become Artist
+</button>
+
+
+<div id="artistStudio" class="hidden">
+
+<div class="card">
+
+<h3>🎤 Artist Studio</h3>
+
+<input
+id="songTitle"
+type="text"
+placeholder="Song Title"
+>
+
+<input
+id="songArtist"
+type="text"
+placeholder="Artist Name"
+>
+
+<input
+id="songAudio"
+type="text"
+placeholder="Audio URL"
+>
+
+<button onclick="uploadSong()">
+Upload Song
+</button>
+
+</div>
+
+</div>
+
+
+
+<input
+
+type="text"
+
+placeholder="Search songs, artists..."
+
+style="
+
+width:100%;
+
+padding:12px;
+
+margin-bottom:15px;
+
+border-radius:10px;
+
+border:none;
+
+">
+
+
+
+<div class="card">
+
+
+
+<h3>🔥 Trending Now</h3>
+
+<div id="songsContainer"></div>
+
+
+
+</div>
+
+
+
+<div class="card">
+
+
+
+<h3>💿 Popular Albums</h3>
+
+
+
+<p>Album One</p>
+
+<p>Album Two</p>
+
+<p>Album Three</p>
+
+
+
+</div>
+
+
+
+<div class="card">
+
+
+
+<h3>🎤 Top Artists</h3>
+
+
+
+<p>Wizkid</p>
+
+<p>Burna Boy</p>
+
+<p>Davido</p>
+
+<p>Rema</p>
+
+
+
+</div>
+
+
+
+<div class="card">
+
+
+
+<h3>❤️ Liked Songs</h3>
+
+
+
+<p>No liked songs yet</p>
+
+
+
+</div>
+
+
+
+<div class="card">
+
+
+
+<h3>📃 Playlists</h3>
+
+
+
+<p>My Favorites</p>
+
+<p>Workout Mix</p>
+
+<p>Love Songs</p>
+
+
+
+</div>
+
+
+
+</div>
+
+<div id="aiPage" class="hidden">
+
+<div class="card">
+
+<h2>🤖 V.AI</h2>
+
+<div id="aiMessages"
+style="
+height:300px;
+overflow-y:auto;
+border:1px solid #333;
+padding:10px;
+margin-bottom:10px;
+">
+</div>
+
+<input
+type="text"
+id="aiInput"
+placeholder="Ask V.AI anything..."
+>
+
+<button onclick="askAI()">
+Send
+</button>
+
+</div>
+
+</div>
+
+
+<div id="vMarketPage" class="hidden">
+
+<div class="card">
+
+<h2>🛒 V.Market</h2>
+
+<p>Buy and sell products on Vibeshort.</p>
+
+<button>📦 My Products</button>
+
+<button>➕ Add Product</button>
+
+<button>🛍 Browse Market</button>
+
+</div>
+
+</div>
+
+<div id="businessHubPage" class="hidden">
+
+<div class="card">
+
+<h2>🏢 Business Hub</h2>
+
+<p>Manage your business on Vibeshort.</p>
+
+<button>📈 Business Dashboard</button>
+
+<button>💰 Sales</button>
+
+<button>📢 Advertise</button>
+
+</div>
+
+</div>
+
+<div id="creatorStudioPage" class="hidden">
+
+<div class="card">
+
+<h2>🎬 Creator Studio</h2>
+
+<p>Manage your content and earnings.</p>
+
+<button>📹 My Videos</button>
+
+<button>💰 Earnings</button>
+
+<button>📊 Analytics</button>
+
+</div>
+
+</div>
+
+
+<div id="datingPage" class="hidden">
+
+<div class="card">
+
+<h2>❤️ V.Dating</h2>
+
+<p>Find friends, soulmates and meaningful connections.</p>
+
+<button>
+💘 Find Matches
+</button>
+
+<button>
+❤️ My Likes
+</button>
+
+<button>
+💬 Dating Chats
+</button>
+
+</div>
+
+</div>
+
+
+
+
+<script type="module">
+
+const menuBtn =
+document.getElementById("menuBtn");
+const closeMenuBtn =
+document.getElementById("closeMenuBtn");
+
+const sideMenu =
+document.getElementById("sideMenu");
+
+if(menuBtn && sideMenu){
+
+menuBtn.addEventListener("click",()=>{
+
+sideMenu.classList.toggle("hidden");
+
+});
+
+if(closeMenuBtn){
+
+closeMenuBtn.addEventListener("click",()=>{
+
+sideMenu.classList.add("hidden");
+
+});
+
+}
+
+}
+
+
+window.openSearch = function(){
+
+openPage("searchPage");
+
+};
+
+
+window.openWalletPage = function(){
+openPage("walletPage");
+};
+
+
+window.openVDating = function(){
+
+openPage("datingPage");
+
+};
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  Timestamp,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyBYtHVT7KwEf9VtzYp7bbexLNwt_p1bd1Y",
+  authDomain: "vibeshort-820eb.firebaseapp.com",
+  projectId: "vibeshort-820eb",
+  storageBucket: "vibeshort-820eb.firebasestorage.app",
+  messagingSenderId: "386341891080",
+  appId: "1:386341891080:web:56e11105e204536a4ef5bd"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+
+let currentUser = null;
+let viewedUserId = null;
+let currentChatUser = null;
+
+const CEO_EMAIL = "okoroejimchiagoziejoshua@gmail.com";
+
+window.verifyUser = async function(uid){
+
+const user = auth.currentUser;
+
+if(!user){
+alert("Login first");
+return;
+}
+
+if(user.email !== CEO_EMAIL){
+alert("Only CEO can verify users");
+return;
+}
+
+try{
+
+await updateDoc(
+doc(db,"users",uid),
+{
+verified:true
+}
+);
+
+alert("User Verified Successfully");
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+/* SIGNUP */
+window.signup = async function(){
+
+  const nickname =
+    document.getElementById("nickname").value.trim();
+
+  const username =
+    document.getElementById("username").value.trim();
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  if(
+    !nickname ||
+    !username ||
+    !email ||
+    !password
+  ){
+    alert("Please fill all fields");
+    return;
+  }
+
+  if(username.length < 3){
+    alert("Username too short");
+    return;
+  }
+
+  if(username.length > 30){
+    alert("Username too long");
+    return;
+  }
+
+  try{
+
+    const result =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    const uid = result.user.uid;
+
+await setDoc(
+doc(db,"users",result.user.uid),
+{
+nickname,
+username,
+email,
+photoURL:"",
+verified: false,
+isArtist:false,
+bio:"New Vibeshort User",
+website:"",
+followers:0,
+following:0,
+likes:0,
+createdAt:Date.now()
+}
+);
+  
+
+    alert("Account created successfully");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+
+
+document
+.getElementById("profilePictureInput")
+.addEventListener("change", uploadProfilePicture);
+
+async function uploadProfilePicture(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+const user = auth.currentUser;
+
+if(!user) return;
+
+const storageRef = ref(
+storage,
+"profilePictures/" + user.uid
+);
+
+await uploadBytes(storageRef,file);
+
+const photoURL =
+await getDownloadURL(storageRef);
+
+await updateDoc(
+doc(db,"users",user.uid),
+{
+photoURL:photoURL
+}
+);
+
+const avatar =
+document.getElementById("profileAvatar");
+
+avatar.src =
+photoURL + "?t=" + Date.now();
+
+
+alert("Profile picture updated!");
+
+}
+
+
+window.likePost = async function(postId){
+
+
+
+const postRef =
+
+doc(db,"posts",postId);
+
+
+
+const postSnap =
+
+await getDoc(postRef);
+
+
+
+const data =
+
+postSnap.data();
+
+
+
+await updateDoc(postRef,{
+
+
+
+likes:(data.likes || 0)+1
+
+
+
+});
+
+
+
+loadFeed();
+
+
+
+};
+
+
+
+/* LOGIN */
+window.login = async function(){
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    alert("Login successful");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+/* LOGOUT */
+window.logout = async function(){
+
+  await signOut(auth);
+
+};
+
+/* LOAD PROFILE */
+async function loadProfile(user){
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(db,"users",user.uid)
+      );
+
+    if(snap.exists()){
+
+      const data = snap.data();
+
+if(data.isArtist){
+
+const studio =
+document.getElementById("artistStudio");
+
+if(studio){
+studio.classList.remove("hidden");
+}
+
+}
+
+
+const verifyBtn =
+document.getElementById(
+"verifyUserBtn"
+);
+
+if(
+auth.currentUser &&
+auth.currentUser.email === CEO_EMAIL
+){
+
+verifyBtn.classList.remove(
+"hidden"
+);
+
+verifyBtn.onclick = () =>
+verifyUser(user.uid);
+
+}
+
+
+if(data.photoURL){
+
+document
+.getElementById("profileAvatar")
+.src =
+data.photoURL;
+
+}
+
+const emailBox =
+document.getElementById("accountEmail");
+
+if(emailBox){
+
+emailBox.innerText =
+data.email || user.email;
+
+}
+document.getElementById(
+  "editNickname"
+).value =
+  data.nickname || "";
+
+document.getElementById(
+  "editUsername"
+).value =
+  data.username || "";
+
+document.getElementById(
+  "editBio"
+).value =
+  data.bio || "";
+
+document.getElementById(
+  "editWebsite"
+).value =
+  data.website || ""; 
+
+      document.getElementById(
+        "profileNickname"
+      ).innerText =
+        data.nickname || "User";
+
+      document.getElementById(
+  "profileUsername"
+).innerText =
+  "@" +
+  (data.username || "user") +
+  (data.verified ? " ✔️" : "");
+
+      document.getElementById(
+        "profileBio"
+      ).innerText =
+        data.bio || "New Vibeshort User";
+
+document.getElementById(
+  "profileWebsite"
+).innerHTML =
+  data.website
+    ? `<a href="${data.website}" target="_blank">${data.website}</a>`
+    : "";
+
+      document.getElementById(
+        "likesCount"
+      ).innerText =
+        data.likes || 0;
+
+      document.getElementById(
+        "followersCount"
+      ).innerText =
+        data.followers || 0;
+
+      document.getElementById(
+        "followingCount"
+      ).innerText =
+        data.following || 0;
+
+    }
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+
+
+
+window.saveProfile = async function(){
+
+  if(!currentUser){
+    alert("Not logged in");
+    return;
+  }
+
+  try{
+
+    await setDoc(
+  doc(db,"users",currentUser.uid),
+  {
+    nickname:
+      document.getElementById("editNickname").value.trim(),
+
+    username:
+      document.getElementById("editUsername").value.trim(),
+
+    bio:
+      document.getElementById("editBio").value.trim(),
+
+    website:
+      document.getElementById("editWebsite").value.trim()
+  },
+  { merge:true }
+);
+
+    await loadProfile(currentUser);
+
+    alert("Profile updated!");
+
+   }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+
+
+async function loadSongs(){
+
+const container =
+document.getElementById("songsContainer");
+
+if(!container) return;
+
+container.innerHTML = "";
+
+const snap =
+await getDocs(collection(db,"songs"));
+
+snap.forEach(docu=>{
+
+const song = docu.data();
+
+container.innerHTML += `
+
+<div class="card">
+
+<h4>${song.title}</h4>
+
+<p>${song.artist}</p>
+
+<button>
+▶ Play
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+window.openSavedMessages = function(){
+
+  currentChatUser = "saved";
+
+  document.getElementById(
+    "chatHeader"
+  ).innerText =
+    "📌 Saved Messages";
+
+  openPage("chatWindow");
+
+};
+
+window.toggleEditProfile = function(){
+
+  document
+    .getElementById("editProfileBox")
+    .classList.toggle("hidden");
+
+};
+
+
+
+
+/* CREATE POST */
+
+
+window.followUser = async function(){
+
+  if(!currentUser || !viewedUserId){
+    return;
+  }
+
+  try{
+
+    const followId =
+      currentUser.uid + "_" + viewedUserId;
+
+const existingFollow =
+  await getDoc(
+    doc(db,"followers",followId)
+  );
+
+if(existingFollow.exists()){
+  alert("Already following");
+  return;
+}
+
+    await setDoc(
+      doc(db,"followers",followId),
+      {
+        followerId: currentUser.uid,
+        followingId: viewedUserId
+      }
+    );
+
+    const meSnap =
+      await getDoc(
+        doc(db,"users",currentUser.uid)
+      );
+
+    const userSnap =
+      await getDoc(
+        doc(db,"users",viewedUserId)
+      );
+
+    const myData = meSnap.data();
+    const theirData = userSnap.data();
+
+    await updateDoc(
+      doc(db,"users",currentUser.uid),
+      {
+        following:
+          (myData.following || 0) + 1
+      }
+    );
+
+    await updateDoc(
+      doc(db,"users",viewedUserId),
+      {
+        followers:
+          (theirData.followers || 0) + 1
+      }
+    );
+
+    await loadProfile(currentUser);
+
+    alert("Followed successfully");
+
+document.getElementById(
+  "followBtn"
+).innerText = "Following";
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+
+document
+.getElementById("followBtn")
+.onclick = followUser;
+
+/* AUTH STATE */
+onAuthStateChanged(auth, async(user)=>{
+
+currentUser = user;
+
+if(user){
+
+document.getElementById("authBox")
+.classList.add("hidden");
+
+document.getElementById("appBox")
+.classList.remove("hidden");
+
+document.getElementById("bottomNav")
+.classList.remove("hidden");
+
+await loadProfile(user);
+
+await loadSongs();
+
+await loadVideos();
+
+openPage("homePage");
+
+}else{
+
+document.getElementById("authBox")
+.classList.remove("hidden");
+
+document.getElementById("appBox")
+.classList.add("hidden");
+
+document.getElementById("bottomNav")
+.classList.add("hidden");
+
+}
+
+});
+
+window.startChat = function(){
+
+  openPage("messagesPage");
+
+};
+
+window.loadMessages = function(){
+
+  const box =
+    document.getElementById(
+      "chatMessages"
+    );
+
+  const q =
+    query(
+      collection(db,"messages"),
+      orderBy("createdAt")
+    );
+
+  onSnapshot(q,(snapshot)=>{
+
+    box.innerHTML = "";
+
+    snapshot.forEach(docItem=>{
+
+      const msg =
+        docItem.data();
+
+      if(
+        (
+          msg.senderId === currentUser.uid &&
+          msg.receiverId === currentChatUser
+        )
+        ||
+        (
+          msg.senderId === currentChatUser &&
+          msg.receiverId === currentUser.uid
+        )
+      ){
+
+     box.innerHTML += `
+
+<div class="${
+msg.senderId===currentUser.uid
+? "myMessage"
+: "theirMessage"
+}">
+
+${msg.text}
+
+</div>
+
+`;
+
+      }
+
+    });
+
+  });
+
+};
+
+window.loadChatList = function(){
+
+  const box =
+    document.getElementById(
+      "chatList"
+    );
+
+  const q =
+    query(
+      collection(db,"messages")
+    );
+
+  onSnapshot(q,async(snapshot)=>{
+
+    let users = {};
+
+    snapshot.forEach(docItem=>{
+
+      const msg =
+        docItem.data();
+
+      if(
+        msg.senderId === currentUser.uid
+      ){
+        users[msg.receiverId] = true;
+      }
+
+      if(
+        msg.receiverId === currentUser.uid
+      ){
+        users[msg.senderId] = true;
+      }
+
+    });
+
+    box.innerHTML = "";
+
+    for(const uid in users){
+
+      const userSnap =
+        await getDoc(
+          doc(db,"users",uid)
+        );
+
+      if(userSnap.exists()){
+
+        const user =
+          userSnap.data();
+
+        box.innerHTML += `
+
+<div
+class="chatItem"
+onclick="openSavedChat('${uid}')"
+>
+
+<div class="chatAvatar">
+👤
+</div>
+
+<div class="chatInfo">
+
+<div class="chatName">
+${user.nickname}
+</div>
+
+<div class="chatPreview">
+Tap to chat
+</div>
+
+</div>
+
+<div class="chatTime">
+Now
+</div>
+
+</div>
+
+`;
+
+      }
+
+    }
+
+  });
+
+};
+
+window.openSavedChat =
+async function(uid){
+
+  currentChatUser = uid;
+
+  const userSnap =
+    await getDoc(
+      doc(db,"users",uid)
+    );
+
+  document.getElementById(
+    "chatHeader"
+  ).innerText =
+    userSnap.data().nickname;
+openPage("chatWindow");
+  loadMessages();
+
+};
+
+window.openChat = async function(){
+
+  currentChatUser = viewedUserId;
+
+  const userSnap =
+    await getDoc(
+      doc(db,"users",viewedUserId)
+    );
+
+  const userData =
+    userSnap.data();
+
+  document.getElementById(
+    "chatHeader"
+  ).innerText =
+    userData.nickname;
+
+  openPage("chatWindow");
+
+  loadMessages();
+
+};
+
+
+window.openChatAgain =
+async function(uid){
+
+  currentChatUser = uid;
+
+  const userSnap =
+    await getDoc(
+      doc(db,"users",uid)
+    );
+
+  document.getElementById(
+    "chatHeader"
+  ).innerText =
+    userSnap.data().nickname;
+
+  openPage("chatWindow");
+
+  loadMessages();
+
+};
+
+window.sendMessage = async function(){
+
+  alert("Send button clicked");
+
+  if(!currentChatUser){
+    alert("No chat user selected");
+    return;
+  }
+
+  const text =
+    document.getElementById("chatInput").value.trim();
+
+  if(!text){
+    alert("Type a message first");
+    return;
+  }
+
+  try{
+
+    await addDoc(
+      collection(db,"messages"),
+      {
+        senderId: currentUser.uid,
+        receiverId: currentChatUser,
+        text: text,
+        createdAt: serverTimestamp()
+      }
+    );
+
+    alert("Message saved");
+
+    document.getElementById(
+      "chatInput"
+    ).value = "";
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+window.searchUsers = async function(){
+
+  const search =
+    document.getElementById(
+      "searchUser"
+    ).value
+    .trim()
+    .toLowerCase();
+
+  const results =
+    document.getElementById(
+      "searchResults"
+    );
+
+  results.innerHTML = "";
+
+  if(!search){
+    return;
+  }
+
+  try{
+
+    const snapshot = await getDocs(
+  collection(db,"users")
+);
+
+
+    snapshot.forEach(docItem=>{
+
+      const user =
+        docItem.data();
+
+      if(
+        user.username &&
+        user.username
+        .toLowerCase()
+        .includes(search)
+      ){
+
+        results.innerHTML += `
+
+<div
+class="feedPost"
+onclick="openUserProfile('${docItem.id}')"
+style="cursor:pointer;"
+>
+
+  <h3>${user.nickname}</h3>
+
+  <p>@${user.username}</p>
+
+</div>
+
+`;
+
+      }
+
+    });
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+window.uploadSong = async function(){
+
+const title =
+document.getElementById("songTitle").value;
+
+const artist =
+document.getElementById("songArtist").value;
+
+const audio =
+document.getElementById("songAudio").value;
+
+if(!title || !artist){
+alert("Fill all fields");
+return;
+}
+
+try{
+
+await addDoc(
+collection(db,"songs"),
+{
+title:title,
+artist:artist,
+audio:audio,
+likes:0,
+plays:0,
+createdAt:Date.now()
+}
+);
+
+alert("Song Uploaded");
+
+loadSongs();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+window.openUserProfile = async function(userId){
+if(userId === currentUser.uid){
+
+if (currentUser.email === CEO_EMAIL) {
+  document.getElementById("verifyUserBtn").style.display = "block";
+} else {
+  document.getElementById("verifyUserBtn").style.display = "none";
+}
+
+  document.getElementById(
+    "followBtn"
+  ).style.display = "none";
+
+}else{
+
+  document.getElementById(
+    "followBtn"
+  ).style.display = "block";
+
+}
+viewedUserId = userId;
+if(userId === currentUser.uid){
+
+if (currentUser && currentUser.email === CEO_EMAIL) {
+  verifyBtn.classList.remove("hidden");
+} else {
+  verifyBtn.classList.add("hidden");
+}
+
+  document.getElementById(
+    "followBtn"
+  ).style.display = "none";
+
+}else{
+
+  document.getElementById(
+    "followBtn"
+  ).style.display = "block";
+
+}
+
+const followDoc =
+  await getDoc(
+    doc(
+      db,
+      "followers",
+      currentUser.uid + "_" + userId
+    )
+  );
+
+document.getElementById(
+  "followBtn"
+).innerText =
+  followDoc.exists()
+    ? "Following"
+    : "Follow";
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(db,"users",userId)
+      );
+
+    if(!snap.exists()){
+      alert("User not found");
+      return;
+    }
+
+    const data = snap.data();
+
+if(data.isArtist){
+
+const studio =
+document.getElementById("artistStudio");
+
+if(studio){
+studio.classList.remove("hidden");
+}
+
+}
+
+    const nickname =
+      document.getElementById("viewNickname");
+
+    const username =
+      document.getElementById("viewUsername");
+
+    const bio =
+      document.getElementById("viewBio");
+
+    const website =
+      document.getElementById("viewWebsite");
+
+    if(!nickname || !username || !bio || !website){
+      alert("userProfilePage IDs missing");
+      return;
+    }
+
+    nickname.innerText =
+      data.nickname || "User";
+
+    username.innerText =
+      "@" + (data.username || "user");
+
+    bio.innerText =
+      data.bio || "";
+
+    website.innerHTML =
+      data.website
+      ? `<a href="${data.website}" target="_blank">${data.website}</a>`
+      : "";
+
+    openPage("userProfilePage");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+
+
+
+/* NAVIGATION */
+
+const pages = [
+"homePage",
+"searchPage",
+"shortsPage",
+"uploadPage",
+"messagesPage",
+"profilePage",
+"userProfilePage",
+"chatWindow",
+"walletPage",
+"cryptoPage",
+"globalPayPage",
+"musicPage",
+"datingPage",
+"vMarketPage",
+"businessHubPage",
+"creatorStudioPage",
+"aiPage"
+];
+
+
+function openPage(pageId){
+
+  pages.forEach(page=>{
+
+    const el = document.getElementById(page);
+
+    if(el){
+      el.classList.add("hidden");
+    }
+
+  });
+
+  const target =
+    document.getElementById(pageId);
+
+  if(target){
+    target.classList.remove("hidden");
+  }
+
+}
+
+
+
+window.becomeArtist = async function(){
+
+if(!currentUser){
+alert("Login first");
+return;
+}
+
+try{
+
+await updateDoc(
+doc(db,"users",currentUser.uid),
+{
+isArtist:true
+}
+);
+
+alert("Artist Account Activated");
+
+loadProfile(currentUser);
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+
+window.openGlobalPayPage = async function(){
+
+const snap =
+await getDoc(
+doc(db,"users",currentUser.uid)
+);
+
+const data = snap.data();
+
+document.getElementById(
+"globalPayBalance"
+).innerText =
+"$" + (data.globalPayBalance || 0);
+
+document.getElementById(
+"globalPayId"
+).innerText =
+"ID: " + data.globalPayId;
+
+openPage("globalPayPage");
+
+};
+
+
+window.openCryptoPage = function(){
+
+openPage("cryptoPage");
+
+};
+
+
+window.openMusicPage = function(){
+
+openPage("musicPage");
+
+}
+
+
+
+
+
+
+window.openAIPage = function(){
+
+openPage("aiPage");
+
+};
+
+
+
+window.openVMarketPage = function(){
+openPage("vMarketPage");
+};
+
+window.openBusinessHubPage = function(){
+openPage("businessHubPage");
+};
+
+window.openCreatorStudioPage = function(){
+openPage("creatorStudioPage");
+};
+
+
+
+
+window.shareVideo = function(){
+
+alert("Share feature coming soon");
+
+};
+
+
+window.askAI = async function(){
+
+const input =
+document.getElementById(
+"aiInput"
+);
+
+const question =
+input.value.trim();
+
+if(!question){
+return;
+}
+
+const box =
+document.getElementById(
+"aiMessages"
+);
+
+box.innerHTML += `
+<div class="card">
+🧑 ${question}
+</div>
+`;
+
+input.value = "";
+
+try{
+
+let reply = "";
+
+if(question.toLowerCase().includes("hello")){
+    reply = "Hello 👋 Welcome to Vibeshort!";
+}
+else if(question.toLowerCase().includes("bitcoin")){
+    reply = "Bitcoin is a digital cryptocurrency.";
+}
+else if(question.toLowerCase().includes("who made you")){
+    reply = "I am V.AI created by Smally Wiper 🚀";
+}
+else if(question.toLowerCase().includes("vibeshort")){
+    reply = "Vibeshort is a platform to watch, create and earn.";
+}
+else{
+    reply = "I'm still learning. Ask me something else 😊";
+}
+
+box.innerHTML += `
+<div class="card">
+🤖 ${reply}
+</div>
+`;
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+
+async function loadVideos(){
+
+const feed =
+document.getElementById("feedContainer");
+
+feed.innerHTML = "";
+
+const q = query(
+collection(db,"videos"),
+orderBy("createdAt","desc")
+);
+
+onSnapshot(q,(snapshot)=>{
+
+feed.innerHTML = "";
+
+snapshot.forEach((docItem)=>{
+
+const video = docItem.data();
+
+feed.innerHTML += `
+
+<div class="videoFeed">
+
+<div class="videoWrapper">
+
+<video autoplay muted loop playsinline>
+
+<source src="${video.videoUrl}" type="video/mp4">
+
+</video>
+
+<div class="videoActions">
+
+<div onclick="likeVideo(this,'${docItem.id}')">
+❤️
+<p>${video.likes || 0}</p>
+</div>
+
+<div>
+💬
+<p>${video.comments || 0}</p>
+</div>
+
+<div onclick="shareVideo()">
+🔗
+</div>
+
+</div>
+
+<div class="videoCaption">
+
+<b>@${video.username}</b><br>
+
+${video.caption}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+}
+
+
+
+window.likeVideo = async function(btn, id){
+
+const ref = doc(db,"videos",id);
+const snap = await getDoc(ref);
+
+const data = snap.data();
+
+await updateDoc(ref,{
+likes:(data.likes || 0) + 1
+});
+
+};
+
+
+window.verifyUser = async function () {
+  if (!viewedUserId) {
+    alert("No user selected");
+    return;
+  }
+
+  try {
+    await updateDoc(doc(db, "users", viewedUserId), {
+      verified: true
+    });
+
+    alert("User verified successfully ✔️");
+
+    // reload profile so badge shows immediately
+    const snap = await getDoc(doc(db, "users", viewedUserId));
+    if (snap.exists()) {
+      loadProfile({ uid: viewedUserId });
+    }
+
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+
+window.shareVideo = function(){
+
+alert("Share feature coming soon");
+
+};
+
+
+document.getElementById("homeBtn").onclick = function(){
+openPage("homePage");
+};
+
+document.getElementById("shortsBtn").onclick = function(){
+openPage("musicPage");
+};
+
+
+document.getElementById("uploadBtn").onclick = function(){
+openPage("uploadPage");
+};
+
+document.getElementById("messagesBtn").onclick = function(){
+
+  openPage("messagesPage");
+
+  if(currentUser){
+    loadChatList();
+  }
+
+};
+
+document.getElementById("profileBtn").onclick = function(){
+
+  openPage("profilePage");
+
+};
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
