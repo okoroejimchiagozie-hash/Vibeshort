@@ -28,10 +28,24 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#000;
-color:#fff;
-padding-bottom:70px;
+background:linear-gradient(
+180deg,
+#07070a,
+#0f172a,
+#111827
+);
+
+color:white;
+
+padding-bottom:80px;
+
+font-family:
+'Inter',
+sans-serif;
+
+overflow-x:hidden;
 }
+
 
 header{
 position:sticky;
@@ -47,10 +61,25 @@ z-index:999;
 }
 
 .logo{
-font-size:28px;
-font-weight:bold;
-color:#8a5cff;
+
+font-size:32px;
+
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+#8a5cff,
+#00d4ff,
+#ff4ecd
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
 }
+
 
 .topIcons{
 display:flex;
@@ -64,12 +93,27 @@ padding:15px;
 }
 
 .card{
-background:#111;
-border:1px solid #222;
-border-radius:12px;
-padding:15px;
-margin-bottom:15px;
+
+background:
+rgba(255,255,255,.05);
+
+backdrop-filter:
+blur(20px);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+padding:20px;
+
+margin-bottom:20px;
+
+box-shadow:
+0 8px 40px rgba(0,0,0,.3);
+
 }
+
 
 input,textarea{
 width:100%;
@@ -83,16 +127,44 @@ color:white;
 }
 
 button{
+
 width:100%;
-padding:12px;
+
+padding:14px;
+
 margin-top:10px;
+
 border:none;
-border-radius:10px;
-background:#8a5cff;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#8a5cff,
+#ff4ecd
+);
+
 color:white;
-font-weight:bold;
+
+font-weight:700;
+
 cursor:pointer;
+
+transition:.3s;
+
 }
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 0 25px
+rgba(138,92,255,.6);
+
+}
+
 
 .hidden{
 display:none;
@@ -163,17 +235,38 @@ margin-bottom:10px;
 }
 
 .bottomNav{
+
 position:fixed;
-bottom:0;
-left:0;
-width:100%;
+
+bottom:15px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:95%;
+
 height:70px;
-background:#111;
-border-top:1px solid #333;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(25px);
+
+border-radius:25px;
+
+border:
+1px solid rgba(255,255,255,.08);
+
 display:flex;
+
 justify-content:space-around;
+
 align-items:center;
+
 z-index:99999;
+
 }
 
 .navBtn{
@@ -351,6 +444,59 @@ margin-bottom:10px;
 }
 
 
+.verified-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:20px;
+    height:20px;
+
+    background:#1d9bf0;
+
+    border-radius:50%;
+
+    margin-left:5px;
+}
+
+.verified-badge svg{
+    width:12px;
+    height:12px;
+}
+
+.settings-section{
+
+    background:#111;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border-radius:15px;
+
+}
+
+.settings-section h3{
+
+    margin-bottom:10px;
+
+    color:#8a5cff;
+
+}
+
+
+#searchResults .feedPost{
+    transition:0.2s;
+}
+
+#searchResults .feedPost:hover{
+    transform:scale(1.02);
+    background:#1a1a1a;
+}
+
+
+
+
 
 </style>
 </head>
@@ -369,6 +515,10 @@ id="nickname"
 placeholder="Nickname"
 >
 
+<input id="searchUser"
+type="text"
+placeholder="Search users..."
+oninput="searchUsers()">
 
 <input
 type="text"
@@ -568,9 +718,17 @@ Nickname
 👤
 </div>
 
-<div class="profileUser" id="viewUsername">
-@username
-</div>
+<h3 id="profileName">
+   Smally Wiper
+
+   <span id="verifiedBadge" class="verified-badge" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="white">
+         <path d="M22 12l-2.2 2.5.3 3.3-3.2.7-1.7 2.8-3.2-1.4-3.2 1.4-1.7-2.8-3.2-.7.3-3.3L2 12l2.2-2.5-.3-3.3 3.2-.7 1.7-2.8 3.2 1.4 3.2-1.4 1.7 2.8 3.2.7-.3 3.3L22 12z"/>
+      </svg>
+   </span>
+
+</h3>
+
 
 <div class="profileBio" id="viewBio">
 Bio
@@ -748,11 +906,10 @@ accept="image/*">
 
 
 
-<h2>⚡ Vibeshort Hub</h2>
+<h2>⚡Vibeshort Hub</h2>
 
 <p style="color:#888;margin-top:5px;">
 
-Future Entertainment Ecosystem
 
 </p>
 
@@ -818,34 +975,51 @@ Future Entertainment Ecosystem
 
 
 
-<hr style="margin:20px 0;">
 
 
-
-<h3>Account Center</h3>
-
+<div class="settings-section">
 
 
-<p id="accountEmail"></p>
+<h3>👤 Account Info</h3>
 
-
-
-<button>
-
-🔒 Security
-
+<button onclick="changePassword()">
+Change Password
 </button>
 
-
-
-<button>
-
-✔ Verification
-
+<button onclick="changeEmail()">
+Change Email
 </button>
 
-<hr style="margin:20px 0;">
+<button>
+Login Devices
+</button>
 
+</div>
+
+
+<div class="settings-section">
+
+<h3>🔔 Notifications</h3>
+
+<button>
+Notification Settings
+</button>
+
+</div>
+
+<div class="settings-section">
+
+<h3>🛡️ Privacy</h3>
+
+<button>
+Private Account
+</button>
+
+<button>
+Blocked Users
+</button>
+
+</div>
 
 
 <button onclick="logout()">
@@ -855,10 +1029,14 @@ Future Entertainment Ecosystem
 </button>
 
 
+
 </div>
 
 
 </div>
+
+
+
 
 
 
@@ -1338,6 +1516,14 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 
 import {
+updatePassword,
+updateEmail
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
   getFirestore,
   doc,
   setDoc,
@@ -1574,6 +1760,8 @@ loadFeed();
 
 /* LOGIN */
 window.login = async function(){
+
+alert("LOGIN BUTTON WORKING");
 
   const email =
     document.getElementById("email").value.trim();
@@ -2223,74 +2411,65 @@ window.sendMessage = async function(){
 
 };
 
-window.searchUsers = async function(){
 
-  const search =
-    document.getElementById(
-      "searchUser"
-    ).value
-    .trim()
-    .toLowerCase();
+window.searchUsers = async function () {
 
-  const results =
-    document.getElementById(
-      "searchResults"
-    );
+  const searchInput = document.getElementById("searchUser");
+  const results = document.getElementById("searchResults");
+
+  const search = searchInput.value.trim().toLowerCase();
 
   results.innerHTML = "";
 
-  if(!search){
-    return;
-  }
+  if (!search) return;
 
-  try{
+  try {
 
-    const snapshot = await getDocs(
-  collection(db,"users")
-);
+    const snapshot = await getDocs(collection(db, "users"));
 
+    let found = false;
 
-    snapshot.forEach(docItem=>{
+    snapshot.forEach((docItem) => {
 
-      const user =
-        docItem.data();
+      const user = docItem.data();
 
-      if(
-        user.username &&
-        user.username
-        .toLowerCase()
-        .includes(search)
-      ){
+      const username = (user.username || "").toLowerCase();
+      const nickname = (user.nickname || "").toLowerCase();
 
-        results.innerHTML += `
+      if (username.includes(search) || nickname.includes(search)) {
 
-<div
-class="feedPost"
-onclick="openUserProfile('${docItem.id}')"
-style="cursor:pointer;"
->
+        found = true;
 
-  <h3>${user.nickname}</h3>
+        const div = document.createElement("div");
+        div.className = "feedPost";
 
-  <p>@${user.username}</p>
+        div.onclick = () => {
+          openUserProfile(docItem.id);
+        };
 
-</div>
+        div.innerHTML = `
+          <h3>
+            ${user.nickname || "User"}
+            ${user.verified ? "✔️" : ""}
+          </h3>
+          <p>@${user.username || "user"}</p>
+        `;
 
-`;
-
+        results.appendChild(div);
       }
 
     });
 
-  }catch(error){
+    if (!found) {
+      results.innerHTML = `<p style="color:#888;">No users found</p>`;
+    }
 
+  } catch (error) {
     console.log(error);
-
+    alert("Search error: " + error.message);
   }
 
 };
-
-
 
 window.uploadSong = async function(){
 
@@ -2336,45 +2515,32 @@ alert(error.message);
 
 
 window.openUserProfile = async function(userId){
+
 if(userId === currentUser.uid){
 
-if (currentUser.email === CEO_EMAIL) {
-  document.getElementById("verifyUserBtn").style.display = "block";
-} else {
-  document.getElementById("verifyUserBtn").style.display = "none";
-}
-
-  document.getElementById(
-    "followBtn"
-  ).style.display = "none";
+  document.getElementById("followBtn").style.display = "none";
 
 }else{
 
-  document.getElementById(
-    "followBtn"
-  ).style.display = "block";
+  document.getElementById("followBtn").style.display = "block";
 
 }
+
 viewedUserId = userId;
-if(userId === currentUser.uid){
+// ONLY show verify button for OTHER users (not yourself)
+const verifyBtn = document.getElementById("verifyUserBtn");
 
-if (currentUser && currentUser.email === CEO_EMAIL) {
-  verifyBtn.classList.remove("hidden");
+if (
+  currentUser &&
+  currentUser.email === CEO_EMAIL &&
+  userId !== currentUser.uid
+) {
+  verifyBtn.style.display = "block";
 } else {
-  verifyBtn.classList.add("hidden");
+  verifyBtn.style.display = "none";
 }
 
-  document.getElementById(
-    "followBtn"
-  ).style.display = "none";
 
-}else{
-
-  document.getElementById(
-    "followBtn"
-  ).style.display = "block";
-
-}
 
 const followDoc =
   await getDoc(
@@ -2438,7 +2604,10 @@ studio.classList.remove("hidden");
       data.nickname || "User";
 
     username.innerText =
-      "@" + (data.username || "user");
+  "@" +
+  (data.username || "user") +
+  (data.verified ? " ✔️" : "");
+
 
     bio.innerText =
       data.bio || "";
@@ -2602,11 +2771,6 @@ openPage("creatorStudioPage");
 
 
 
-window.shareVideo = function(){
-
-alert("Share feature coming soon");
-
-};
 
 
 window.askAI = async function(){
@@ -2759,28 +2923,84 @@ likes:(data.likes || 0) + 1
 
 
 window.verifyUser = async function () {
+
   if (!viewedUserId) {
     alert("No user selected");
     return;
   }
 
   try {
-    await updateDoc(doc(db, "users", viewedUserId), {
-      verified: true
-    });
+
+    await updateDoc(
+      doc(db, "users", viewedUserId),
+      {
+        verified: true
+      }
+    );
 
     alert("User verified successfully ✔️");
 
-    // reload profile so badge shows immediately
-    const snap = await getDoc(doc(db, "users", viewedUserId));
-    if (snap.exists()) {
-      loadProfile({ uid: viewedUserId });
-    }
+    await openUserProfile(viewedUserId);
 
   } catch (error) {
+
     alert(error.message);
+
   }
+
 };
+
+
+window.changePassword =
+async function(){
+
+const password =
+prompt("Enter New Password");
+
+if(!password) return;
+
+try{
+
+await updatePassword(
+auth.currentUser,
+password
+);
+
+alert("Password Updated");
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+}
+
+
+window.changeEmail =
+async function(){
+
+const email =
+prompt("Enter New Email");
+
+if(!email) return;
+
+try{
+
+await updateEmail(
+auth.currentUser,
+email
+);
+
+alert("Email Updated");
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+}
 
 
 window.shareVideo = function(){
