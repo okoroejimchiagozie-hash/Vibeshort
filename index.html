@@ -611,6 +611,224 @@ transform:rotate(360deg);
 
 
 
+
+#welcomeScreen{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100vh;
+
+display:flex;
+flex-direction:column;
+
+justify-content:center;
+align-items:center;
+
+padding:30px;
+
+background:
+linear-gradient(
+180deg,
+#040816 0%,
+#0a0f24 40%,
+#150933 100%
+);
+
+overflow:hidden;
+
+z-index:5000;
+
+}
+
+#welcomeScreen::before{
+
+content:"";
+
+position:absolute;
+
+bottom:-120px;
+left:-80px;
+
+width:400px;
+height:250px;
+
+background:
+linear-gradient(
+90deg,
+#8a2be2,
+#2d8cff
+);
+
+border-radius:50%;
+
+filter:blur(50px);
+
+opacity:.9;
+
+}
+
+#welcomeScreen::after{
+
+content:"";
+
+position:absolute;
+
+bottom:-140px;
+right:-100px;
+
+width:420px;
+height:260px;
+
+background:
+linear-gradient(
+90deg,
+#2d8cff,
+#8a2be2
+);
+
+border-radius:50%;
+
+filter:blur(50px);
+
+opacity:.8;
+
+}
+
+.welcomeLogo{
+
+width:140px;
+height:140px;
+
+border-radius:35px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:70px;
+
+font-weight:bold;
+
+background:
+linear-gradient(
+135deg,
+#8a2be2,
+#2d8cff
+);
+
+margin-bottom:25px;
+
+z-index:2;
+
+box-shadow:
+0 0 35px rgba(138,43,226,.5);
+
+}
+
+.welcomeTitle{
+
+font-size:54px;
+
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+#8a2be2,
+#2d8cff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+margin-bottom:12px;
+
+z-index:2;
+
+}
+
+.welcomeTag{
+
+font-size:13px;
+
+letter-spacing:3px;
+
+color:#d0d0d0;
+
+margin-bottom:45px;
+
+z-index:2;
+
+text-align:center;
+
+}
+
+.welcomeButtons{
+
+width:100%;
+max-width:340px;
+
+z-index:2;
+
+}
+
+.signupBtn{
+
+background:white !important;
+
+color:black !important;
+
+font-weight:bold;
+
+margin-bottom:15px;
+
+border-radius:30px;
+
+height:58px;
+
+}
+
+.loginBtn{
+
+background:#111 !important;
+
+color:white !important;
+
+font-weight:bold;
+
+margin-bottom:15px;
+
+border-radius:30px;
+
+height:58px;
+
+}
+
+.googleBtn{
+
+background:
+linear-gradient(
+90deg,
+#8a2be2,
+#2d8cff
+) !important;
+
+color:white !important;
+
+font-weight:bold;
+
+border-radius:30px;
+
+height:58px;
+
+}
+
+
+
 </style>
 </head>
 
@@ -628,23 +846,45 @@ transform:rotate(360deg);
 
 <div id="authBox">
 
-<div class="card" id="welcomeScreen">
 
-<h2>🔥 Vibeshort</h2>
+<div id="welcomeScreen">
 
-<button onclick="showSignup()">
-Create Account
+<div class="welcomeLogo">
+▶
+</div>
+
+<div class="welcomeTitle">
+Vibeshort
+</div>
+
+<div class="welcomeTag">
+WATCH • CREATE • CONNECT • EARN
+</div>
+
+<div class="welcomeButtons">
+
+<button
+class="signupBtn"
+onclick="showSignup()">
+Sign Up
 </button>
 
-<button onclick="showLogin()">
-Login
+<button
+class="loginBtn"
+onclick="showLogin()">
+Log In
 </button>
 
-<button id="googleLoginBtn">
+<button
+id="googleLoginBtn"
+class="googleBtn">
 Continue with Google
 </button>
 
 </div>
+
+</div>
+
 
 <div class="card hidden" id="signupScreen">
 
@@ -2227,65 +2467,14 @@ window.startChat = function(){
 
   openPage("messagesPage");
 
-};
-
-window.loadMessages = function(){
-
-  const box =
-    document.getElementById(
-      "chatMessages"
-    );
-
-  const q =
-    query(
-      collection(db,"messages"),
-      orderBy("createdAt")
-    );
-
-  onSnapshot(q,(snapshot)=>{
-
-    box.innerHTML = "";
-
-    snapshot.forEach(docItem=>{
-
-      const msg =
-        docItem.data();
-
-      if(
-        (
-          msg.senderId === currentUser.uid &&
-          msg.receiverId === currentChatUser
-        )
-        ||
-        (
-          msg.senderId === currentChatUser &&
-          msg.receiverId === currentUser.uid
-        )
-      ){
-
-     box.innerHTML += `
-
-<div class="${
-msg.senderId===currentUser.uid
-? "myMessage"
-: "theirMessage"
-}">
-
-${msg.text}
-
-</div>
-
-`;
-
-      }
-
-    });
-
-  });
+  loadChatList();
 
 };
+
 
 window.loadChatList = function(){
+
+console.log("loadChatList Running");
 
   const box =
     document.getElementById(
@@ -2302,6 +2491,8 @@ window.loadChatList = function(){
     let users = {};
 
     snapshot.forEach(docItem=>{
+
+console.log("CHAT DOC:", docItem.data());
 
       const msg =
         docItem.data();
@@ -2373,47 +2564,61 @@ Now
 
 };
 
-window.openSavedChat =
-async function(uid){
 
-  currentChatUser = uid;
+window.openSavedChat = async function(uid){
 
-  const userSnap =
-    await getDoc(
-      doc(db,"users",uid)
-    );
+currentChatUser = uid;
 
-  document.getElementById(
-    "chatHeader"
-  ).innerText =
-    userSnap.data().nickname;
+const userSnap =
+await getDoc(
+doc(db,"users",uid)
+);
+
+if(userSnap.exists()){
+
+document.getElementById(
+"chatHeader"
+).innerText =
+userSnap.data().nickname;
+
+}
+
 openPage("chatWindow");
-  loadMessages();
+
+loadMessages();
 
 };
+
 
 window.openChat = async function(){
 
-  currentChatUser = viewedUserId;
+if(!viewedUserId){
+alert("User not selected");
+return;
+}
 
-  const userSnap =
-    await getDoc(
-      doc(db,"users",viewedUserId)
-    );
+currentChatUser = viewedUserId;
 
-  const userData =
-    userSnap.data();
+const userSnap =
+await getDoc(
+doc(db,"users",viewedUserId)
+);
 
-  document.getElementById(
-    "chatHeader"
-  ).innerText =
-    userData.nickname;
+if(userSnap.exists()){
 
-  openPage("chatWindow");
+document.getElementById(
+"chatHeader"
+).innerText =
+userSnap.data().nickname;
 
-  loadMessages();
+}
+
+openPage("chatWindow");
+
+loadMessages();
 
 };
+
 
 
 window.openChatAgain =
@@ -2439,46 +2644,135 @@ async function(uid){
 
 window.sendMessage = async function(){
 
-  alert("Send button clicked");
+if(!currentChatUser){
+alert("No chat user selected");
+return;
+}
 
-  if(!currentChatUser){
-    alert("No chat user selected");
-    return;
-  }
+const input =
+document.getElementById("chatInput");
 
-  const text =
-    document.getElementById("chatInput").value.trim();
+const text =
+input.value.trim();
 
-  if(!text){
-    alert("Type a message first");
-    return;
-  }
+if(!text){
+return;
+}
 
-  try{
+try{
 
-    await addDoc(
-      collection(db,"messages"),
-      {
-        senderId: currentUser.uid,
-        receiverId: currentChatUser,
-        text: text,
-        createdAt: serverTimestamp()
-      }
-    );
+await addDoc(
+collection(db,"messages"),
+{
+senderId: currentUser.uid,
+receiverId: currentChatUser,
+text: text,
+createdAt: serverTimestamp()
+}
+);
 
-    alert("Message saved");
+input.value = "";
 
-    document.getElementById(
-      "chatInput"
-    ).value = "";
+console.log("Message Sent");
 
-  }catch(error){
+loadChatList();
 
-    alert(error.message);
+}catch(error){
 
-  }
+console.error(error);
+
+alert(error.message);
+
+}
+
+}
+
+
+
+
+window.loadMessages = function(){
+
+const box =
+document.getElementById("chatMessages");
+
+if(!box){
+return;
+}
+
+const q =
+query(
+collection(db,"messages"),
+orderBy("createdAt","asc")
+);
+
+onSnapshot(q,(snapshot)=>{
+
+box.innerHTML = "";
+
+snapshot.forEach((docItem)=>{
+
+console.log(docItem.data());
+
+const msg =
+docItem.data();
+
+const showMessage =
+
+(
+msg.senderId === currentUser.uid &&
+msg.receiverId === currentChatUser
+)
+
+||
+
+(
+msg.senderId === currentChatUser &&
+msg.receiverId === currentUser.uid
+);
+
+if(showMessage){
+
+const div =
+document.createElement("div");
+
+div.style.padding = "10px";
+div.style.margin = "8px 0";
+div.style.borderRadius = "10px";
+
+if(msg.senderId === currentUser.uid){
+
+div.style.background =
+"#6a11cb";
+
+div.style.textAlign =
+"right";
+
+}else{
+
+div.style.background =
+"#222";
+
+div.style.textAlign =
+"left";
+
+}
+
+div.innerText =
+msg.text;
+
+box.appendChild(div);
+
+}
+
+});
+
+box.scrollTop =
+box.scrollHeight;
+
+});
 
 };
+
 
 
 window.searchUsers = async function () {
@@ -2545,6 +2839,7 @@ window.uploadSong = async function(){
 
 const title =
 document.getElementById("songTitle").value;
+
 
 const artist =
 document.getElementById("songArtist").value;
@@ -3131,11 +3426,14 @@ document.getElementById("messagesBtn").onclick = function(){
 
   openPage("messagesPage");
 
+  console.log("Loading Chat List");
+
   if(currentUser){
     loadChatList();
   }
 
 };
+
 
 document.getElementById("profileBtn").onclick = function(){
 
